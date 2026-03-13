@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 리터러시 포트폴리오</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Tailwind Config & Theme Init -->
+  <script>
+    tailwind.config = { darkMode: 'class' };
+    
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Segoe UI", Roboto, sans-serif;
+      overflow-x: hidden;
+    }
+    
+    ::selection {
+      background-color: #e0e7ff;
+      color: #312e81;
+    }
+    .dark ::selection {
+      background-color: #3730a3;
+      color: #e0e7ff;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition-property: opacity, transform;
+      transition-duration: 0.8s;
+      transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .fade-in.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body class="bg-[#fbfbfd] dark:bg-[#000000] text-[#1d1d1f] dark:text-[#f5f5f7] transition-colors duration-300">
+
+  <!-- 전역 배경 블러 효과 -->
+  <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none opacity-100 dark:opacity-40 transition-opacity duration-300">
+    <div class="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] bg-indigo-200/50 dark:bg-indigo-600/30 rounded-full blur-[100px] mix-blend-multiply dark:mix-blend-screen"></div>
+    <div class="absolute top-[30%] right-[-10%] w-[35vw] h-[35vw] bg-blue-100/50 dark:bg-blue-600/20 rounded-full blur-[100px] mix-blend-multiply dark:mix-blend-screen"></div>
+    <div class="absolute bottom-[-10%] left-[10%] w-[50vw] h-[50vw] bg-gray-200/60 dark:bg-zinc-800/40 rounded-full blur-[100px] mix-blend-multiply dark:mix-blend-screen"></div>
+  </div>
+
+  <!-- 헤더 -->
+  <header class="fixed top-0 w-full z-50 bg-white/70 dark:bg-[#000000]/70 backdrop-blur-xl border-b border-gray-200/40 dark:border-zinc-800/50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between text-sm font-semibold tracking-tight">
+      <span class="text-[#1d1d1f] dark:text-[#f5f5f7]">AI 리터러시 포트폴리오</span>
+      <div class="flex items-center gap-4">
+        <span class="text-gray-500 dark:text-zinc-400 hidden sm:inline-block">최영은 (202405216)</span>
+        <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200/50 dark:hover:bg-zinc-800 transition-colors focus:outline-none text-gray-500 dark:text-zinc-400">
+          <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+          <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 메인 히어로 -->
+  <main class="relative z-10 pt-48 pb-24 px-6 max-w-7xl mx-auto flex flex-col items-center text-center">
+    <div class="fade-in inline-flex items-center px-4 py-1.5 mb-8 rounded-full bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm border border-gray-200/60 dark:border-zinc-700/60 shadow-sm text-indigo-600 dark:text-indigo-400 text-xs font-bold tracking-widest uppercase" style="transition-delay: 0.1s">
+      AI Literacy for Social Welfare
+    </div>
+    
+    <h1 class="fade-in text-5xl md:text-7xl lg:text-[5rem] font-bold tracking-tighter text-[#1d1d1f] dark:text-[#f5f5f7] leading-[1.1] mb-8 break-keep" style="transition-delay: 0.2s">
+      AI 리터러시를 통한 <br class="hidden md:block"/> 사회복지 역량 강화.
+    </h1>
+    
+    <p class="fade-in text-xl md:text-2xl text-gray-500 dark:text-zinc-400 font-medium max-w-3xl leading-relaxed break-keep" style="transition-delay: 0.3s">
+      AI와 데이터 분석을 활용하여 세상을 이해하고<br class="hidden md:block"/>
+      복지를 위한 혁신적 도구로 활용.
+    </p>
+  </main>
+
+  <!-- 과제 그리드 섹션 -->
+  <section class="relative z-10 px-6 pb-24 max-w-7xl mx-auto">
+    <div id="card-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+  </section>
+
+  <!-- 자기소개 섹션 -->
+  <section id="about" class="relative z-10 min-h-screen flex items-center px-6 py-20 bg-white/30 dark:bg-zinc-900/20 backdrop-blur-3xl border-y border-gray-200/50 dark:border-zinc-800/50">
+    <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      
+      <!-- 사진 영역 -->
+      <div class="fade-in order-2 lg:order-1 relative group" style="transition-delay: 0.2s">
+        <div class="aspect-[4/5] md:aspect-square rounded-[3rem] overflow-hidden bg-gray-200 dark:bg-zinc-800 shadow-2xl transition-transform duration-700 group-hover:scale-[1.02]">
+          <img src="https://i.namu.wiki/i/Yu5BDHQYknKmChLkS9bgOR0jqfE3ojWF_VgjMJ3nhbmztCFy_qp8pFs0eN4q7sM8FYnCU8Nv89wAPcBPMXo3Sg.webp" 
+               alt="최영은 프로필 사진" 
+               class="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-700"
+               onerror="this.src='https://via.placeholder.com/800x1000?text=Profile+Image'">
+        </div>
+        <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-indigo-500/10 rounded-full blur-3xl group-hover:bg-indigo-500/20 transition-colors"></div>
+      </div>
+
+      <!-- 텍스트 영역 -->
+      <div class="fade-in order-1 lg:order-2 space-y-8" style="transition-delay: 0.4s">
+        <div>
+          <h3 class="text-indigo-600 dark:text-indigo-400 font-bold tracking-widest uppercase text-sm mb-4">About Me</h3>
+          <h2 class="text-4xl md:text-6xl font-bold tracking-tight mb-6">데이터로 그리는<br/>따뜻한 사회복지.</h2>
+          <p class="text-xl text-gray-500 dark:text-zinc-400 leading-relaxed break-keep">
+            안녕하세요. 기술과 사람의 연결고리를 찾는 사회복지사 지망생 최영은입니다. AI 리터러시를 통해 단순한 데이터 분석을 넘어, 소외된 이웃의 목소리를 숫자로 읽어내고 기술로 해결하는 사회복지의 미래를 꿈꿉니다.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-8 border-t border-gray-200 dark:border-zinc-800 pt-8">
+          <div>
+            <p class="text-sm font-semibold text-gray-400 mb-1">Affiliation</p>
+            <p class="text-lg font-bold">부산대학교 사회복지학과</p>
+          </div>
+          <div>
+            <p class="text-sm font-semibold text-gray-400 mb-1">Student ID</p>
+            <p class="text-lg font-bold font-mono">202405216</p>
+          </div>
+          <div>
+            <p class="text-sm font-semibold text-gray-400 mb-1">Name</p>
+            <p class="text-lg font-bold">최영은 (Choi Young-eun)</p>
+          </div>
+          <div>
+            <p class="text-sm font-semibold text-gray-400 mb-1">Specialty</p>
+            <p class="text-lg font-bold">AI Literacy & Policy</p>
+          </div>
+        </div>
+
+        <div class="pt-4">
+          <button class="px-8 py-4 bg-[#1d1d1f] dark:bg-[#f5f5f7] text-white dark:text-black rounded-full font-bold transition-transform hover:scale-105 active:scale-95 shadow-lg">
+            문의하기
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 푸터 -->
+  <footer class="relative z-10 bg-white/40 dark:bg-[#000000]/40 backdrop-blur-2xl">
+    <div class="max-w-7xl mx-auto px-6 py-16 flex flex-col md:flex-row items-center justify-between text-[#1d1d1f] dark:text-[#f5f5f7]">
+      <div class="flex flex-col items-center md:items-start mb-8 md:mb-0 text-center md:text-left">
+        <h2 class="text-xl font-bold tracking-tight mb-2">AI 리터러시의 이해</h2>
+        <p class="text-sm text-gray-500 dark:text-zinc-400 font-medium">사회복지와 AI의 만남, 포트폴리오 프로젝트</p>
+      </div>
+      <div class="text-center md:text-right">
+        <p class="text-sm font-semibold text-gray-500 dark:text-zinc-400 mb-1">© 2024 AI Literacy Portfolio</p>
+        <p class="text-xs text-gray-400 font-medium">Designed for Social Welfare Innovation</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const assignments = [
+      { id: '01', title: 'AI의 이해: 정의와 역사 (NotebookLM 실습)', icon: 'book-open', theme: 'blue' },
+      { id: '02', title: '생성형 AI 맞춤형 상담 챗봇 기획', icon: 'message-circle', theme: 'emerald' },
+      { id: '03', title: '사회 문제 해결을 위한 알고리즘', icon: 'cpu', theme: 'violet' },
+      { id: '04', title: '지역사회 데이터 시각화 프로젝트', icon: 'globe', theme: 'rose' },
+      { id: '05', title: '소외계층을 위한 AI 접근성 연구', icon: 'users', theme: 'amber' },
+      { id: '06', title: '복지 정책 텍스트 마이닝 분석', icon: 'activity', theme: 'cyan' },
+      { id: '07', title: '딥러닝 기반 위기 가구 예측 모델', icon: 'trending-up', theme: 'pink' },
+      { id: '08', title: '윤리적 AI와 사회복지사의 역할', icon: 'shield', theme: 'indigo' },
+      { id: '09', title: '공공 데이터 활용 사회서비스 앱', icon: 'sparkles', theme: 'orange' },
+      { id: '10', title: '최종 프로젝트: AI 복지 플랫폼', icon: 'heart', theme: 'red' },
+    ];
+
+    const themeMap = {
+      blue: { bg: 'from-blue-200 to-cyan-100 dark:from-blue-600/20 dark:to-cyan-600/20', text: 'text-blue-500 dark:text-blue-400', hover: 'group-hover:text-blue-600 dark:group-hover:text-blue-300' },
+      emerald: { bg: 'from-emerald-200 to-teal-100 dark:from-emerald-600/20 dark:to-teal-600/20', text: 'text-emerald-500 dark:text-emerald-400', hover: 'group-hover:text-emerald-600 dark:group-hover:text-emerald-300' },
+      violet: { bg: 'from-violet-200 to-purple-100 dark:from-violet-600/20 dark:to-purple-600/20', text: 'text-violet-500 dark:text-violet-400', hover: 'group-hover:text-violet-600 dark:group-hover:text-violet-300' },
+      rose: { bg: 'from-rose-200 to-pink-100 dark:from-rose-600/20 dark:to-pink-600/20', text: 'text-rose-500 dark:text-rose-400', hover: 'group-hover:text-rose-600 dark:group-hover:text-rose-300' },
+      amber: { bg: 'from-amber-200 to-yellow-100 dark:from-amber-600/20 dark:to-yellow-600/20', text: 'text-amber-500 dark:text-amber-400', hover: 'group-hover:text-amber-600 dark:group-hover:text-amber-300' },
+      cyan: { bg: 'from-cyan-200 to-sky-100 dark:from-cyan-600/20 dark:to-sky-600/20', text: 'text-cyan-500 dark:text-cyan-400', hover: 'group-hover:text-cyan-600 dark:group-hover:text-cyan-300' },
+      pink: { bg: 'from-pink-200 to-fuchsia-100 dark:from-pink-600/20 dark:to-fuchsia-600/20', text: 'text-pink-500 dark:text-pink-400', hover: 'group-hover:text-pink-600 dark:group-hover:text-pink-300' },
+      indigo: { bg: 'from-indigo-200 to-blue-100 dark:from-indigo-600/20 dark:to-blue-600/20', text: 'text-indigo-500 dark:text-indigo-400', hover: 'group-hover:text-indigo-600 dark:group-hover:text-indigo-300' },
+      orange: { bg: 'from-orange-200 to-amber-100 dark:from-orange-600/20 dark:to-amber-600/20', text: 'text-orange-500 dark:text-orange-400', hover: 'group-hover:text-orange-600 dark:group-hover:text-orange-300' },
+      red: { bg: 'from-red-200 to-rose-100 dark:from-red-600/20 dark:to-rose-600/20', text: 'text-red-500 dark:text-red-400', hover: 'group-hover:text-red-600 dark:group-hover:text-red-300' }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const cardGrid = document.getElementById('card-grid');
+
+      assignments.forEach((assign, index) => {
+        const delay = 0.1 * (index % 3);
+        const t = themeMap[assign.theme];
+        
+        // 카드 HTML 구조 업데이트: '프로젝트 보기' 영역에 href 속성 추가
+        const cardHTML = `
+          <div class="fade-in group relative w-full h-80 rounded-[2.5rem] bg-white/60 dark:bg-zinc-900/50 backdrop-blur-2xl border border-white dark:border-zinc-800 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] dark:hover:shadow-[0_20px_40px_rgb(0,0,0,0.4)] flex flex-col justify-between p-8" style="transition-delay: ${delay}s">
+            <div class="absolute -right-12 -top-12 w-48 h-48 bg-gradient-to-br ${t.bg} rounded-full blur-2xl opacity-40 group-hover:opacity-80 group-hover:scale-125 transition-all duration-700 pointer-events-none"></div>
+            <div class="relative z-10">
+              <div class="w-12 h-12 rounded-2xl bg-white/80 dark:bg-zinc-800/80 backdrop-blur-md shadow-sm border border-white dark:border-zinc-700 flex items-center justify-center mb-6 ${t.text} group-hover:scale-110 ${t.hover} transition-all duration-500">
+                <i data-lucide="${assign.icon}" stroke-width="1.5"></i>
+              </div>
+              <p class="text-sm font-semibold ${t.text} opacity-80 mb-2 tracking-wide">Assignment ${assign.id}</p>
+              <h3 class="text-2xl font-bold tracking-tight text-[#1d1d1f] dark:text-[#f5f5f7] leading-snug break-keep">${assign.title}</h3>
+            </div>
+            
+            <!-- 링크 추가: ./{아이디}/index.html 경로로 이동 -->
+            <a href="./${assign.id}/index.html" class="relative z-10 flex items-center text-sm font-semibold text-gray-500 dark:text-zinc-400 ${t.hover} transition-colors duration-300">
+              프로젝트 보기
+              <i data-lucide="arrow-right" class="w-4 h-4 ml-1 opacity-0 -translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-400"></i>
+            </a>
+          </div>
+        `;
+        cardGrid.insertAdjacentHTML('beforeend', cardHTML);
+      });
+
+      lucide.createIcons();
+
+      const themeToggleBtn = document.getElementById('theme-toggle');
+      themeToggleBtn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark');
+        localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+      });
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+    });
+  </script>
+</body>
+</html>
