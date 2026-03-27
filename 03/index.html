@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>부산광역시 인구 구조 및 고령화 실태 (2020-2024)</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background-color: #f8fafc; color: #0f172a; }
+.chart-container { position: relative; width: 100%; max-width: 800px; margin-left: auto; margin-right: auto; height: 40vh; max-height: 400px; }
+@media (max-width: 768px) { .chart-container { height: 350px; } }
+.gradient-text { background: linear-gradient(90deg, #ec407a, #6200ea); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.card { background-color: #ffffff; border-radius: 1rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); padding: 1.5rem; display: flex; flex-direction: column; }
+</style>
+</head>
+<body class="antialiased">
+
+<!-- 
+Palette Name: Vibrant Synthwave (Deep Purple #6200ea, Vivid Pink #ec407a, Bright Cyan #00e5ff, Amber #ffb300).
+Narrative Plan: 1. Added Home navigation for accessibility. 2. Hero KPIs showing the overall scale. 3. Macro trend showing the "Dead Cross" between total and 60+ population. 4. The accelerating rate of aging per year. 5. District level breakdown. 6. Key insights conclusion.
+Visualization Choices: 1. Dual Axis Line Chart (Goal: Change/Relationships) - Shows total pop shrinking while 60+ grows. 2. Bar Chart with Line Overlay (Goal: Change/Inform) - Highlights the % point growth clearly. 3. Grouped Horizontal Bar (Goal: Compare) - Compares specific district growth effectively. 
+Confirmation: NEITHER Mermaid JS NOR SVG were used in this output.
+-->
+
+<div class="max-w-7xl mx-auto px-4 py-8 md:py-12">
+    
+    <nav class="flex justify-start mb-8">
+        <a href="../index.html" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#6200ea] text-white rounded-xl shadow-lg hover:bg-[#7c4dff] hover:scale-105 transition-all font-bold">
+            <span class="text-xl">🏠</span> 홈으로 돌아가기
+        </a>
+    </nav>
+
+    <header class="text-center mb-16">
+        <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 text-slate-900">부산광역시 인구 구조 <span class="gradient-text">데드크로스</span></h1>
+        <p class="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">2020년부터 2024년까지의 인구 감소 및 고령층 100만 명 돌파 실태 분석</p>
+    </header>
+
+    <section class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mb-16">
+        <div class="card border-l-4 border-[#00e5ff]">
+            <span class="text-3xl mb-2">👥</span>
+            <h2 class="text-sm font-semibold text-slate-500 uppercase tracking-wider">2024 총인구</h2>
+            <p class="text-3xl md:text-4xl font-bold text-slate-800 mt-2">325.7<span class="text-lg text-slate-500 font-normal">만 명</span></p>
+        </div>
+        <div class="card border-l-4 border-[#6200ea]">
+            <span class="text-3xl mb-2">📉</span>
+            <h2 class="text-sm font-semibold text-slate-500 uppercase tracking-wider">5년간 인구 감소</h2>
+            <p class="text-3xl md:text-4xl font-bold text-slate-800 mt-2">-9.1<span class="text-lg text-slate-500 font-normal">만 명</span></p>
+        </div>
+        <div class="card border-l-4 border-[#ec407a]">
+            <span class="text-3xl mb-2">👴</span>
+            <h2 class="text-sm font-semibold text-slate-500 uppercase tracking-wider">2024 고령인구 (60+)</h2>
+            <p class="text-3xl md:text-4xl font-bold text-[#ec407a] mt-2">102.0<span class="text-lg text-[#ec407a] opacity-70 font-normal">만 명</span></p>
+        </div>
+        <div class="card border-l-4 border-[#ffb300]">
+            <span class="text-3xl mb-2">⚠️</span>
+            <h2 class="text-sm font-semibold text-slate-500 uppercase tracking-wider">고령화율</h2>
+            <p class="text-3xl md:text-4xl font-bold text-[#ffb300] mt-2">31.3<span class="text-lg text-[#ffb300] opacity-70 font-normal">%</span></p>
+        </div>
+    </section>
+
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+        
+        <div class="card col-span-1 md:col-span-2">
+            <div class="mb-6">
+                <h3 class="text-2xl font-bold text-slate-800">생산가능인구의 급격한 실종과 '실버 100만' 진입</h3>
+                <p class="text-slate-600 mt-2">지난 5년간 부산의 총인구는 매년 약 2~3만 명씩 꾸준히 감소하여 325만 명 선에 도달했습니다. 반면, 60세 이상 고령 인구는 12.8만 명이 증가하며 2024년 사상 처음으로 100만 명을 돌파했습니다. 총인구가 9.1만 명 감소하는 동안 고령층이 12.8만 명 증가했다는 것은, 사실상 60세 미만 경제활동인구가 약 22만 명이나 증발했음을 뜻합니다.</p>
+            </div>
+            <div class="chart-container">
+                <canvas id="populationTrendChart"></canvas>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="mb-6">
+                <h3 class="text-2xl font-bold text-slate-800">매년 1%p 이상 치솟는 고령화율</h3>
+                <p class="text-slate-600 mt-2">전체 인구 대비 60세 이상 인구가 차지하는 비율은 2020년 26.6%에서 2024년 31.3%로 불과 5년 만에 4.7%p 상승했습니다. 부산 시민 3명 중 1명 이상이 60세 이상인 초고령화 단계가 매우 가파른 속도로 굳어지고 있습니다.</p>
+            </div>
+            <div class="chart-container">
+                <canvas id="agingRateChart"></canvas>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="mb-6">
+                <h3 class="text-2xl font-bold text-slate-800">원도심부터 부도심까지, 보편적 고령화</h3>
+                <p class="text-slate-600 mt-2">원도심인 중구는 총인구 4만 명 선이 무너졌음에도 고령층은 증가했습니다. 서구(+10.6%)와 같은 전통적 도심은 물론, 핵심 부도심인 부산진구(+14.1%)에서도 60세 이상 인구가 급증하며, 특정 낙후 지역이 아닌 부산광역시 전체의 생존 전략이 시급함을 보여줍니다.</p>
+            </div>
+            <div class="chart-container">
+                <canvas id="districtComparisonChart"></canvas>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="card bg-slate-900 text-white border-t-8 border-[#00e5ff]">
+        <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
+            <span class="text-3xl">💡</span> 핵심 인사이트 및 결론
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="p-4 rounded-lg bg-slate-800">
+                <h4 class="text-xl font-bold text-[#ec407a] mb-2">01. 데드크로스의 일상화</h4>
+                <p class="text-slate-300">매년 인구가 줄어드는 속도보다 고령층이 늘어나는 속도가 약 1.4배 더 빠릅니다. 이는 단순 인구 감소를 넘어 경제 활동 인구의 완전한 축소를 의미합니다.</p>
+            </div>
+            <div class="p-4 rounded-lg bg-slate-800">
+                <h4 class="text-xl font-bold text-[#ffb300] mb-2">02. 노령 친화 인프라 시급</h4>
+                <p class="text-slate-300">고령 인구가 전체의 31%를 넘어섰습니다. 도시의 모든 서비스(교통, 의료, 주거 환경) 패러다임을 고령자 중심으로 전면 재설계해야 합니다.</p>
+            </div>
+            <div class="p-4 rounded-lg bg-slate-800">
+                <h4 class="text-xl font-bold text-[#00e5ff] mb-2">03. 실버 경제로의 체질 개선</h4>
+                <p class="text-slate-300">100만 시니어의 등장은 위기이자 새로운 기회입니다. 시니어 계층 특화 산업 육성과 새로운 형태의 노인 일자리 창출이 지역 경제의 돌파구가 되어야 합니다.</p>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<script>
+function wrapLabel(label, limit) {
+    if (label.length <= limit) return label;
+    const words = label.split(' ');
+    let lines = [];
+    let currentLine = '';
+    words.forEach(word => {
+        if ((currentLine + word).length > limit) {
+            if (currentLine) lines.push(currentLine.trim());
+            currentLine = word + ' ';
+        } else {
+            currentLine += word + ' ';
+        }
+    });
+    if (currentLine) lines.push(currentLine.trim());
+    return lines;
+}
+
+const customTooltip = {
+    callbacks: {
+        title: function(tooltipItems) {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
+            } else {
+                return label;
+            }
+        }
+    }
+};
+
+const years = ['2020', '2021', '2022', '2023', '2024'];
+const totalPopData = [3349016, 3324335, 3295760, 3279604, 3257256];
+const seniorPopData = [892277, 934024, 965387, 997993, 1020554];
+
+const ctx1 = document.getElementById('populationTrendChart').getContext('2d');
+new Chart(ctx1, {
+    type: 'line',
+    data: {
+        labels: years,
+        datasets: [
+            {
+                label: '총 인구 (명)',
+                data: totalPopData,
+                borderColor: '#00e5ff',
+                backgroundColor: 'rgba(0, 229, 255, 0.1)',
+                borderWidth: 3,
+                yAxisID: 'yTotal',
+                fill: true,
+                tension: 0.3,
+                pointBackgroundColor: '#00e5ff',
+                pointRadius: 5
+            },
+            {
+                label: '60세 이상 인구 (명)',
+                data: seniorPopData,
+                borderColor: '#ec407a',
+                backgroundColor: 'rgba(236, 64, 122, 0.1)',
+                borderWidth: 3,
+                yAxisID: 'ySenior',
+                fill: true,
+                tension: 0.3,
+                pointBackgroundColor: '#ec407a',
+                pointRadius: 5
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            tooltip: customTooltip,
+            legend: { position: 'top', labels: { font: { family: 'Pretendard', size: 14 } } }
+        },
+        scales: {
+            yTotal: {
+                type: 'linear',
+                display: true,
+                position: 'left',
+                title: { display: true, text: '총 인구', color: '#00e5ff' },
+                grid: { color: 'rgba(0,0,0,0.05)' }
+            },
+            ySenior: {
+                type: 'linear',
+                display: true,
+                position: 'right',
+                title: { display: true, text: '60세 이상 인구', color: '#ec407a' },
+                grid: { drawOnChartArea: false }
+            }
+        }
+    }
+});
+
+const agingRateData = [26.64, 28.10, 29.29, 30.43, 31.33];
+const ctx2 = document.getElementById('agingRateChart').getContext('2d');
+new Chart(ctx2, {
+    type: 'bar',
+    data: {
+        labels: years,
+        datasets: [
+            {
+                type: 'line',
+                label: '추세선',
+                data: agingRateData,
+                borderColor: '#ffb300',
+                borderWidth: 3,
+                fill: false,
+                tension: 0.2,
+                pointBackgroundColor: '#ffffff',
+                pointBorderColor: '#ffb300',
+                pointRadius: 6
+            },
+            {
+                type: 'bar',
+                label: '고령 인구 점유율 (%)',
+                data: agingRateData,
+                backgroundColor: '#6200ea',
+                borderRadius: 6
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            tooltip: customTooltip,
+            legend: { display: false }
+        },
+        scales: {
+            y: {
+                min: 20,
+                max: 35,
+                grid: { color: 'rgba(0,0,0,0.05)' }
+            }
+        }
+    }
+});
+
+const rawDistrictLabels = ['부산광역시 중구 (원도심)', '부산광역시 서구 (원도심)', '부산진구 (부도심 핵심권역)'];
+const wrappedDistrictLabels = rawDistrictLabels.map(label => wrapLabel(label, 16));
+const district2020 = [13932, 34264, 95280];
+const district2024 = [15002, 37896, 108753];
+
+const ctx3 = document.getElementById('districtComparisonChart').getContext('2d');
+new Chart(ctx3, {
+    type: 'bar',
+    data: {
+        labels: wrappedDistrictLabels,
+        datasets: [
+            {
+                label: '2020년 60세 이상',
+                data: district2020,
+                backgroundColor: '#94a3b8',
+                borderRadius: 4
+            },
+            {
+                label: '2024년 60세 이상',
+                data: district2024,
+                backgroundColor: '#ec407a',
+                borderRadius: 4
+            }
+        ]
+    },
+    options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            tooltip: customTooltip,
+            legend: { position: 'bottom' }
+        },
+        scales: {
+            x: {
+                grid: { color: 'rgba(0,0,0,0.05)' }
+            },
+            y: {
+                grid: { display: false },
+                ticks: { autoSkip: false }
+            }
+        }
+    }
+});
+</script>
+</body>
+</html>
